@@ -15,11 +15,15 @@
  */
 package com.example.android.uamp.ui;
 
+import android.Manifest;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.media.MediaBrowserCompat;
 import android.text.TextUtils;
 
@@ -61,6 +65,8 @@ public class MusicPlayerActivity extends BaseActivity
 
         initializeToolbar();
         initializeFromParams(savedInstanceState, getIntent());
+
+        checkPermission();
 
         // Only check if a full screen player is needed on the first time:
         if (savedInstanceState == null) {
@@ -105,6 +111,14 @@ public class MusicPlayerActivity extends BaseActivity
         LogHelper.d(TAG, "onNewIntent, intent=" + intent);
         initializeFromParams(null, intent);
         startFullScreenActivityIfNeeded(intent);
+    }
+
+    private void checkPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+        }
     }
 
     private void startFullScreenActivityIfNeeded(Intent intent) {

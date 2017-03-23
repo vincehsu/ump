@@ -16,6 +16,7 @@
 
 package com.example.android.uamp.utils;
 
+import android.content.Context;
 import android.support.v4.media.MediaMetadataCompat;
 
 import com.example.android.uamp.model.MusicProviderSource;
@@ -52,4 +53,8 @@ public class SimpleMusicProviderSource implements MusicProviderSource {
         return mData.iterator();
     }
 
+    @Override
+    public Iterator<MediaMetadataCompat> iterator(Context context) {
+        return mData.iterator();
+    }
 }

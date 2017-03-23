@@ -16,6 +16,7 @@
 
 package com.example.android.uamp.model;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -68,7 +69,7 @@ public class MusicProvider {
     }
 
     public MusicProvider() {
-        this(new RemoteJSONSource());
+        this(new LocalMediaSource());
     }
     public MusicProvider(MusicProviderSource source) {
         mSource = source;
@@ -212,6 +213,10 @@ public class MusicProvider {
      * for future reference, keying tracks by musicId and grouping by genre.
      */
     public void retrieveMediaAsync(final Callback callback) {
+        retrieveMediaAsync(callback, null);
+    }
+
+    public void retrieveMediaAsync(final Callback callback, final Context context) {
         LogHelper.d(TAG, "retrieveMediaAsync called");
         if (mCurrentState == State.INITIALIZED) {
             if (callback != null) {
@@ -225,7 +230,7 @@ public class MusicProvider {
         new AsyncTask<Void, Void, State>() {
             @Override
             protected State doInBackground(Void... params) {
-                retrieveMedia();
+                retrieveMedia(context);
                 return mCurrentState;
             }
 
@@ -253,12 +258,20 @@ public class MusicProvider {
         mMusicListByGenre = newMusicListByGenre;
     }
 
-    private synchronized void retrieveMedia() {
+    private synchronized void retrieveMedia(Context context) {
         try {
             if (mCurrentState == State.NON_INITIALIZED) {
                 mCurrentState = State.INITIALIZING;
+                Iterator<MediaMetadataCompat> tracks;
 
-                Iterator<MediaMetadataCompat> tracks = mSource.iterator();
+                if (context != null) {
+                    // Local media
+                    tracks = mSource.iterator(context);
+                } else {
+                    // Json media
+                    tracks = mSource.iterator();
+                }
+
                 while (tracks.hasNext()) {
                     MediaMetadataCompat item = tracks.next();
                     String musicId = item.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID);
@@ -275,7 +288,6 @@ public class MusicProvider {
             }
         }
     }
-
 
     public List<MediaBrowserCompat.MediaItem> getChildren(String mediaId, Resources resources) {
         List<MediaBrowserCompat.MediaItem> mediaItems = new ArrayList<>();

@@ -16,6 +16,7 @@
 
 package com.example.android.uamp.model;
 
+import android.content.Context;
 import android.support.v4.media.MediaMetadataCompat;
 
 import com.example.android.uamp.utils.LogHelper;
@@ -53,6 +54,11 @@ public class RemoteJSONSource implements MusicProviderSource {
     private static final String JSON_TRACK_NUMBER = "trackNumber";
     private static final String JSON_TOTAL_TRACK_COUNT = "totalTrackCount";
     private static final String JSON_DURATION = "duration";
+
+    @Override
+    public Iterator<MediaMetadataCompat> iterator(Context context) {
+        return iterator();
+    }
 
     @Override
     public Iterator<MediaMetadataCompat> iterator() {

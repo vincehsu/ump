@@ -23,6 +23,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.wifi.WifiManager;
 import android.os.PowerManager;
+import android.provider.MediaStore;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.TextUtils;
@@ -180,6 +181,9 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
             String source = track.getString(MusicProviderSource.CUSTOM_METADATA_TRACK_SOURCE);
             if (source != null) {
                 source = source.replaceAll(" ", "%20"); // Escape spaces for URLs
+            } else {
+                // get local media file path
+                source = track.getString(MediaStore.Audio.AudioColumns.DATA);
             }
 
             try {
