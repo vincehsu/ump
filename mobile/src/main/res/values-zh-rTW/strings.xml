@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">玩具音樂盒</string>
+    <string name="favorite">我的最愛</string>
+    <string name="error_no_metadata">無法取得中介資料</string>
+    <string name="browse_genres">類別</string>
+    <string name="browse_genre_subtitle">類別歌曲</string>
+    <string name="browse_musics_by_genre_subtitle">%1$s 歌曲</string>
+    <string name="random_queue_title">隨機音樂</string>
+    <string name="error_no_connection">無法連線至伺服器, 請確認您的網路連線</string>
+    <string name="error_loading_media">無法載入媒體</string>
+    <string name="casting_to_device">Cast至 %1$s</string>
+    <string name="currently_playing_song">現正播放歌曲</string>
+    <string name="currently_playing_artist">目前歌手</string>
+    <string name="currently_playing_extra_info">關於現正播放歌曲的更多內容</string>
+    <string name="play_item">播放項目</string>
+    <string name="play_pause">播放或暫停</string>
+    <string name="skip_next">下一首</string>
+    <string name="skip_prev">上一首</string>
+    <string name="touch_to_cast">觸控以連線至Google Cast裝置</string>
+    <!-- Use the default receiver. To customize a styled media receiver, you can use
+         the css and images under <project-root>/docs/cast_styled_receiver -->
+    <string name="cast_application_id">CC1AD845</string>
+    <string name="home_title">Home</string>
+    <string name="related_content_header">你也許也喜歡</string>
+    <string name="action_listen">聆聽</string>
+    <string name="open_content_drawer">打開主目錄</string>
+    <string name="close_content_drawer">關閉主目錄</string>
+    <string name="placeholder_message">This is a placeholder for your application code.</string>
+    <string name="drawer_allmusic_title">所有音樂</string>
+    <string name="drawer_playlists_title">播放清單</string>
+    <string name="now_playing">現正播放</string>
+    <string name="background_image_str">專輯背景圖片</string>
+    <string name="search_queue_title">搜尋結果</string>
+    <string name="no_search_results">沒有任何搜尋結果</string>
+    <string name="loading">載入中…</string>
+    <string name="media_route_menu_title">正在播放…</string>
+</resources>

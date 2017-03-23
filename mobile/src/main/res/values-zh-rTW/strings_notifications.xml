@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stop_casting">停止Cast到裝置</string>
+    <string name="label_pause">暫停</string>
+    <string name="label_play">播放</string>
+    <string name="label_previous">前一首</string>
+    <string name="label_next">下一首</string>
+</resources>
