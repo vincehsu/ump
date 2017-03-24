@@ -33,6 +33,11 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.format.DateUtils;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
@@ -300,27 +305,44 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             return;
         }
         String artUrl = description.getIconUri().toString();
-        mCurrentArtUrl = artUrl;
-        AlbumArtCache cache = AlbumArtCache.getInstance();
-        Bitmap art = cache.getBigImage(artUrl);
-        if (art == null) {
-            art = description.getIconBitmap();
-        }
-        if (art != null) {
-            // if we have the art cached or from the MediaDescription, use it:
-            mBackgroundImage.setImageBitmap(art);
-        } else {
-            // otherwise, fetch a high res version and update:
-            cache.fetch(artUrl, new AlbumArtCache.FetchListener() {
-                @Override
-                public void onFetched(String artUrl, Bitmap bitmap, Bitmap icon) {
-                    // sanity check, in case a new fetch request has been done while
-                    // the previous hasn't yet returned:
-                    if (artUrl.equals(mCurrentArtUrl)) {
-                        mBackgroundImage.setImageBitmap(bitmap);
+        if (URLUtil.isValidUrl(artUrl)) {
+            mCurrentArtUrl = artUrl;
+            AlbumArtCache cache = AlbumArtCache.getInstance();
+            Bitmap art = cache.getBigImage(artUrl);
+            if (art == null) {
+                art = description.getIconBitmap();
+            }
+            if (art != null) {
+                // if we have the art cached or from the MediaDescription, use it:
+                mBackgroundImage.setImageBitmap(art);
+            } else {
+                // otherwise, fetch a high res version and update:
+                cache.fetch(artUrl, new AlbumArtCache.FetchListener() {
+                    @Override
+                    public void onFetched(String artUrl, Bitmap bitmap, Bitmap icon) {
+                        // sanity check, in case a new fetch request has been done while
+                        // the previous hasn't yet returned:
+                        if (artUrl.equals(mCurrentArtUrl)) {
+                            mBackgroundImage.setImageBitmap(bitmap);
+                        }
                     }
-                }
-            });
+                });
+            }
+        } else {
+            // Animate music title
+            TextView animated_music_title = (TextView) findViewById(R.id.animated_music_title);
+            animated_music_title.setText(description.getTitle());
+            final View parent = (View)animated_music_title.getParent();
+
+            Animation animation = new TranslateAnimation(0.0f,
+                    parent.getWidth() - animated_music_title.getWidth() - parent.getPaddingLeft() - parent.getPaddingRight(),
+                    parent.getHeight() / 2, parent.getHeight() / 2);
+            animation.setDuration(10000);
+            animation.setStartOffset(300);
+            animation.setRepeatMode(Animation.REVERSE);
+            animation.setRepeatCount(Animation.INFINITE);
+            animation.setInterpolator(new BounceInterpolator());
+            animated_music_title.startAnimation(animation);
         }
     }
 

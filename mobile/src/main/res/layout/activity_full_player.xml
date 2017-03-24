@@ -28,6 +28,14 @@ limitations under the License.
         android:scaleType="centerCrop"
         android:contentDescription="@string/background_image_str" />
 
+    <TextView
+        android:id="@+id/animated_music_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/fullscreen_line_color"
+        android:contentDescription="Animated text for music title" />
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
