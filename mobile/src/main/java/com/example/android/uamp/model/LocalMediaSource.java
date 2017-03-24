@@ -28,7 +28,7 @@ public class LocalMediaSource implements MusicProviderSource {
     private static ContentResolver mContentResolver;
 
     @Override
-    public boolean is_local() { return true; }
+    public boolean isLocal() { return true; }
 
     @Override
     public Iterator<MediaMetadataCompat> iterator() {

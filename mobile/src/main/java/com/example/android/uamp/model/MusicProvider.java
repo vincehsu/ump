@@ -230,7 +230,7 @@ public class MusicProvider {
         new AsyncTask<Void, Void, State>() {
             @Override
             protected State doInBackground(Void... params) {
-                if (mSource.is_local())
+                if (mSource.isLocal())
                     retrieveMedia(context);
                 else
                     retrieveMedia(null);
