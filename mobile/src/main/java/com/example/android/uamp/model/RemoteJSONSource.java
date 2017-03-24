@@ -56,6 +56,9 @@ public class RemoteJSONSource implements MusicProviderSource {
     private static final String JSON_DURATION = "duration";
 
     @Override
+    public boolean is_local() { return false; }
+
+    @Override
     public Iterator<MediaMetadataCompat> iterator(Context context) {
         return iterator();
     }

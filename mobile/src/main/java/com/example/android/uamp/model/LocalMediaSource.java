@@ -28,6 +28,9 @@ public class LocalMediaSource implements MusicProviderSource {
     private static ContentResolver mContentResolver;
 
     @Override
+    public boolean is_local() { return true; }
+
+    @Override
     public Iterator<MediaMetadataCompat> iterator() {
         return iterator(null);
     }
@@ -86,13 +89,5 @@ public class LocalMediaSource implements MusicProviderSource {
         builder.putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, iconUrl);
         builder.putLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER, trackNumber);
         return builder.build();
-
-
-
-
-
-
-
-
     }
 }

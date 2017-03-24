@@ -27,6 +27,9 @@ import java.util.List;
 
 public class SimpleMusicProviderSource implements MusicProviderSource {
 
+    @Override
+    public boolean is_local() { return false; }
+
     private List<MediaMetadataCompat> mData = new ArrayList<>();
 
     public void add(String title, String album, String artist, String genre, String source,

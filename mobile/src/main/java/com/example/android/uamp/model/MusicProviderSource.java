@@ -23,6 +23,7 @@ import java.util.Iterator;
 
 public interface MusicProviderSource {
     String CUSTOM_METADATA_TRACK_SOURCE = "__SOURCE__";
+    boolean is_local();
     Iterator<MediaMetadataCompat> iterator();
     Iterator<MediaMetadataCompat> iterator(Context context);
 }
