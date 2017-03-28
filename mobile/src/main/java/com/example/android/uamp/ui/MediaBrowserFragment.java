@@ -164,6 +164,14 @@ public class MediaBrowserFragment extends Fragment {
                 mMediaFragmentListener.onMediaItemSelected(item);
             }
         });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                checkForUserVisibleErrors(false);
+                MediaBrowserCompat.MediaItem item = mBrowserAdapter.getItem(position);
+                return mMediaFragmentListener.onMediaItemLongPressed(item);
+            }
+        });
 
         return rootView;
     }
@@ -318,6 +326,7 @@ public class MediaBrowserFragment extends Fragment {
 
     public interface MediaFragmentListener extends MediaBrowserProvider {
         void onMediaItemSelected(MediaBrowserCompat.MediaItem item);
+        boolean onMediaItemLongPressed(MediaBrowserCompat.MediaItem item);
         void setToolbarTitle(CharSequence title);
     }
 

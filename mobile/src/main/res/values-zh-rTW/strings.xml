@@ -35,4 +35,6 @@
     <string name="no_search_results">沒有任何搜尋結果</string>
     <string name="loading">載入中…</string>
     <string name="media_route_menu_title">正在播放…</string>
+    <string name="add_to_playlist">加入播放清單</string>
+    <string name="media_details">媒體詳細資訊</string>
 </resources>

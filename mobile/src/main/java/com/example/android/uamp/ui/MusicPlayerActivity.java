@@ -26,9 +26,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.media.MediaBrowserCompat;
 import android.text.TextUtils;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.android.uamp.R;
 import com.example.android.uamp.utils.LogHelper;
+import com.example.android.uamp.utils.Playlist;
 
 /**
  * Main activity for the music player.
@@ -55,6 +61,7 @@ public class MusicPlayerActivity extends BaseActivity
         "com.example.android.uamp.CURRENT_MEDIA_DESCRIPTION";
 
     private Bundle mVoiceSearchParams;
+    private Playlist mPlaylist;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +74,8 @@ public class MusicPlayerActivity extends BaseActivity
         initializeFromParams(savedInstanceState, getIntent());
 
         checkPermission();
+
+        mPlaylist = Playlist.getInstance();
 
         // Only check if a full screen player is needed on the first time:
         if (savedInstanceState == null) {
@@ -95,6 +104,28 @@ public class MusicPlayerActivity extends BaseActivity
             LogHelper.w(TAG, "Ignoring MediaItem that is neither browsable nor playable: ",
                     "mediaId=", item.getMediaId());
         }
+    }
+
+    @Override
+    public boolean onMediaItemLongPressed(MediaBrowserCompat.MediaItem item) {
+        LogHelper.d(TAG, "onMediaItemLongPressed, mediaId=" + item.getMediaId());
+        if (item.isPlayable()) {
+            String operation;
+            if (mPlaylist.contains(item)) {
+                mPlaylist.remove(item);
+                operation = "removed from";
+            } else {
+                mPlaylist.add(item);
+                operation = "added into";
+            }
+            CharSequence text = item.getDescription().getTitle() + "has been " + operation + " playlist";
+            Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+            toast.show();
+        } else {
+            LogHelper.w(TAG, "Ignoring MediaItem that is not playable: ",
+                    "mediaId=", item.getMediaId());
+        }
+        return true;
     }
 
     @Override
